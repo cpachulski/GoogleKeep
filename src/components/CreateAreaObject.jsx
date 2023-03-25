@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateArea({ onAdd }) {
   const [isExpanded, setExpanded] = useState(false);
@@ -11,7 +12,8 @@ function CreateArea({ onAdd }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(note);
+    const noteWithId = { ...note, id: uuidv4() };
+    onAdd(noteWithId);
     setNote({ title: "", content: "" });
   };
 

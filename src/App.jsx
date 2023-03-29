@@ -7,7 +7,6 @@ import "./App.css";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [editNote, seteditNote] = useState(-0);
 
   function addNote(newNote) {
     setNotes((prevNotes) => [...prevNotes, newNote]);
@@ -17,8 +16,21 @@ function App() {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
   }
 
-  function handleEdit(id) {
-    console.log(id);
+  function handleEdit(id, updateNote, handleEdits) {
+    const pushNote = notes.map((note, index) => {
+      const { title, content, id } = updateNote;
+      if (note.id === id) {
+        return {
+          ...note,
+          title: title,
+          content: content,
+          index: index,
+        };
+      } else {
+        return note;
+      }
+    });
+    setNotes(pushNote);
   }
 
   const noteList = notes.map((note, index) => (
@@ -35,7 +47,6 @@ function App() {
   return (
     <div className="App">
       <Header />
-
       <CreateArea onAdd={addNote} />
       {noteList}
     </div>

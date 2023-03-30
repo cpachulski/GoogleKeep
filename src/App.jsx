@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import CreateArea from "./components/CreateAreaObject";
 import Note from "./components/Note";
@@ -16,31 +16,51 @@ function App() {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
   }
 
-  function handleEdit(id, updateNote, handleEdits) {
-    const pushNote = notes.map((note, index) => {
-      const { title, content, id } = updateNote;
+  function handleUpdateNote(updateNote) {
+    const { title, content, id } = updateNote;
+    const updatedNoteList = notes.map((note) => {
       if (note.id === id) {
         return {
           ...note,
           title: title,
           content: content,
-          index: index,
         };
-      } else {
-        return note;
       }
+      return note;
     });
-    setNotes(pushNote);
+    setNotes(updatedNoteList);
+    handleUpdateNoteRemovel(id, updateNote);
   }
 
-  const noteList = notes.map((note, index) => (
+  function handleUpdateNoteRemovel(id, updateNote) {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    setNotes((prevNotes) => [updateNote, ...prevNotes]);
+  }
+
+  useEffect(() => {
+    let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
+    // localStorage.getItem(mystate_deserialized);
+    console.log("9");
+    setNotes(mystate_deserialized);
+  }, []);
+
+  useEffect(() => {
+    let mystate_serialized = JSON.stringify(notes);
+    localStorage.setItem("mystate", mystate_serialized);
+    // let mystate_serialized = JSON.stringify(notes);
+    // localStorage.setItem("mystate", mystate_serialized);
+    // let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
+    // console.log(mystate_deserialized);
+  }, [notes]);
+
+  const noteList = notes.map((note) => (
     <Note
-      key={index}
+      key={note.id}
       id={note.id}
       title={note.title}
       content={note.content}
       onDelete={deleteNote}
-      handleEdit={handleEdit}
+      handleUpdateNote={handleUpdateNote}
     />
   ));
 

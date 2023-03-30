@@ -1,32 +1,33 @@
 import React, { useState } from "react";
 
-function Note({ id, title, content, onDelete, handleEdit }) {
+function Note({ id, title, content, onDelete, handleUpdateNote }) {
   const handleDelete = () => onDelete(id);
 
-  const [handleEdits, setHandleEdits] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [updateNote, setUpdateNote] = useState({ id, title, content });
 
-  function changeNotes() {
-    setHandleEdits((prevCheck) => !prevCheck);
+  function toggleEditMode() {
+    setIsEditing((prevCheck) => !prevCheck);
   }
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setUpdateNote((preNotes) => ({
-      ...preNotes,
+    setUpdateNote((prevNotes) => ({
+      ...prevNotes,
+
       [name]: value,
     }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleEdit(id, updateNote, handleEdits);
-    setHandleEdits(false);
+    handleUpdateNote(updateNote);
+    setIsEditing(false);
   }
 
   return (
     <div className="note">
-      {handleEdits ? (
+      {isEditing ? (
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -41,9 +42,7 @@ function Note({ id, title, content, onDelete, handleEdit }) {
           ></textarea>
           <button>Save</button>
 
-          <button onClick={changeNotes}>
-            {changeNotes ? "cancel" : "idk"}
-          </button>
+          <button onClick={toggleEditMode}>{toggleEditMode && "cancel"}</button>
         </form>
       ) : (
         <>
@@ -51,7 +50,7 @@ function Note({ id, title, content, onDelete, handleEdit }) {
           <p>{content}</p>
           <button onClick={handleDelete}>Delete</button>
           <br />
-          <button onClick={changeNotes}>Edit</button>
+          <button onClick={toggleEditMode}>Edit</button>
         </>
       )}
     </div>

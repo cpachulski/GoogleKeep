@@ -10,7 +10,15 @@ function Header() {
   return (
     <div className="header">
       {logo}
-      <h1>Keep</h1>
+      <h1 className="header-title">Keep</h1>
+      <form className="SearchBox">
+        <input
+          className="SearchBox-input"
+          type="text"
+          name="title"
+          placeholder="Search"
+        />
+      </form>
     </div>
   );
 }

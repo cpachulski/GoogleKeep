@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 function CreateArea({ onAdd }) {
   const [isExpanded, setExpanded] = useState(false);
   const [note, setNote] = useState({ title: "", content: "" });
+  const [formClicked, setFormClicked] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,7 +19,7 @@ function CreateArea({ onAdd }) {
   };
 
   return (
-    <form>
+    <form className="Main-Note">
       {isExpanded && (
         <input
           type="text"
@@ -36,7 +37,14 @@ function CreateArea({ onAdd }) {
         onChange={handleChange}
         rows={isExpanded ? 3 : 1}
       />
-      <button onClick={handleSubmit}>Add Note</button>
+
+      <button
+        className="butn-Main-Note"
+        onClick={handleSubmit}
+        style={{ display: isExpanded ? "block" : "none" }}
+      >
+        Submit
+      </button>
     </form>
   );
 }

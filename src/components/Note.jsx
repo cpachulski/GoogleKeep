@@ -5,9 +5,12 @@ function Note({ id, title, content, onDelete, handleUpdateNote }) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [updateNote, setUpdateNote] = useState({ id, title, content });
+  const [activeNoteId, setActiveNoteId] = useState(""); //change div
 
   function toggleEditMode() {
-    setIsEditing((prevCheck) => !prevCheck);
+    // setIsEditing((prevCheck) => !prevCheck);
+    setIsEditing(true);
+    setActiveNoteId(id);
   }
 
   function handleChange(e) {
@@ -26,32 +29,36 @@ function Note({ id, title, content, onDelete, handleUpdateNote }) {
   }
 
   return (
-    <div className="note">
+    <div onClick={toggleEditMode}>
       {isEditing ? (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="title"
-            value={updateNote.title}
-            onChange={handleChange}
-          />
-          <textarea
-            name="content"
-            value={updateNote.content}
-            onChange={handleChange}
-          ></textarea>
-          <button>Save</button>
+        <div className={isEditing && id === activeNoteId ? "hidden" : "note"}>
+          <form onSubmit={handleSubmit} className={"form_pop"}>
+            <input
+              type="text"
+              name="title"
+              value={updateNote.title}
+              onChange={handleChange}
+            />
+            <textarea
+              name="content"
+              value={updateNote.content}
+              onChange={handleChange}
+            ></textarea>
+            <button className="butn-Note">Save</button>
 
-          <button onClick={toggleEditMode}>{toggleEditMode && "cancel"}</button>
-        </form>
+            <button onClick={toggleEditMode} className="butn-Note">
+              {toggleEditMode && "cancel"}
+            </button>
+          </form>
+        </div>
       ) : (
-        <>
+        <div className={"note"}>
           <h1>{title}</h1>
           <p>{content}</p>
           <button onClick={handleDelete}>Delete</button>
           <br />
           <button onClick={toggleEditMode}>Edit</button>
-        </>
+        </div>
       )}
     </div>
   );

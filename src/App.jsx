@@ -7,6 +7,7 @@ import "./App.css";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [isModalHiden, setIsModalHiden] = useState(false);
 
   function addNote(newNote) {
     setNotes((prevNotes) => [...prevNotes, newNote]);
@@ -37,22 +38,6 @@ function App() {
     setNotes((prevNotes) => [updateNote, ...prevNotes]);
   }
 
-  useEffect(() => {
-    let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
-    // localStorage.getItem(mystate_deserialized);
-    console.log("9");
-    setNotes(mystate_deserialized);
-  }, []);
-
-  useEffect(() => {
-    let mystate_serialized = JSON.stringify(notes);
-    localStorage.setItem("mystate", mystate_serialized);
-    // let mystate_serialized = JSON.stringify(notes);
-    // localStorage.setItem("mystate", mystate_serialized);
-    // let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
-    // console.log(mystate_deserialized);
-  }, [notes]);
-
   const noteList = notes.map((note) => (
     <Note
       key={note.id}
@@ -68,9 +53,26 @@ function App() {
     <div className="App">
       <Header />
       <CreateArea onAdd={addNote} />
+      {/* <Modal isHiden={isModalHiden} SelectedNote={SelectedNote}/> */}
       {noteList}
     </div>
   );
 }
 
 export default App;
+
+// useEffect(() => {
+//   let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
+//   // localStorage.getItem(mystate_deserialized);
+
+//   setNotes(mystate_deserialized);
+// }, []);
+
+// useEffect(() => {
+//   let mystate_serialized = JSON.stringify(notes);
+//   localStorage.setItem("mystate", mystate_serialized);
+//   // let mystate_serialized = JSON.stringify(notes);
+//   // localStorage.setItem("mystate", mystate_serialized);
+//   // let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
+//   // console.log(mystate_deserialized);
+// }, [notes]);

@@ -19,7 +19,25 @@ body {
   box-shadow: 0 0 2px 0 rgb(110, 110, 110);
   flex-direction: row;
   display: flex;
+}
+
+.header-title {
+  display: flex;
   align-items: center;
+  justify-content: start;
+}
+
+.SearchBox {
+  width: 50%;
+  margin: auto 150px;
+  padding: 2px;
+  background-color: #f1f3f4;
+}
+
+.SearchBox-input {
+  margin: 5px;
+  width: 98%;
+  background-color: #f1f3f4;
 }
 
 .header h1 {
@@ -28,7 +46,17 @@ body {
   font-weight: 600;
 }
 
-form {
+.Main-Note {
+  position: relative;
+  width: 600px;
+
+  margin: 32px auto 50px auto;
+  background: #fff;
+  padding: 7px;
+  border-radius: 7px;
+  box-shadow: 0 1px 7px rgb(128, 128, 128);
+}
+/* form {
   position: relative;
   width: 600px;
   margin: 32px auto 50px auto;
@@ -36,7 +64,7 @@ form {
   padding: 7px;
   border-radius: 7px;
   box-shadow: 0 1px 7px rgb(128, 128, 128);
-}
+} */
 
 form input {
   width: 100%;
@@ -56,7 +84,7 @@ form textarea {
   resize: none;
 }
 
-form button {
+/* form button {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -72,6 +100,17 @@ form button {
   box-shadow: 0 1px 3px rgb(165, 165, 165);
   cursor: pointer;
   outline: none;
+} */
+
+.butn-Main-Note {
+  color: #000000;
+  background-color: #fff;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 70px;
+  border: none;
+  cursor: pointer;
 }
 
 .note {
@@ -83,6 +122,9 @@ form button {
   margin: 16px;
   float: left;
   margin-right: 0;
+}
+.note.hidden {
+  display: none;
 }
 
 .note h1 {
@@ -117,10 +159,25 @@ form button {
     "Lucida Sans", Arial, sans-serif;
 }
 
-.footer {
-  position: fixed;
-  text-align: center;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;
+/* hide the div */
+
+.hidden {
+  visibility: none;
+}
+
+.form_pop {
+  background: #ffffff;
+  width: 240px;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px rgb(175, 175, 175);
+  padding: 10px;
+  margin: 16px;
+  float: left;
+  margin-right: 0;
+}
+.butn-Note {
+  position: relative;
+  float: right;
+  border: none;
+  cursor: pointer;
 }

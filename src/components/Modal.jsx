@@ -21,13 +21,14 @@ function Modal({
         content: selectedNote.content,
         id: selectedNote.id,
       });
-    } else
+    } else {
       setUpdateNote({
         title: "",
         content: "",
         id: "",
       });
-  }, [notes, selectedNoteId]);
+    }
+  }, [selectedNoteId, notes]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -36,7 +37,7 @@ function Modal({
 
   function handleSubmit(e) {
     e.preventDefault();
-
+    console.log("sub", isHidden);
     onSubmit(updateNote);
     handleUpdateNote();
   }
@@ -47,12 +48,14 @@ function Modal({
         <input
           type="text"
           name="title"
+          placeholder="Title"
           value={updateNote.title}
           onChange={handleChange}
         />
         <textarea
           name="content"
           value={updateNote.content}
+          placeholder="Note"
           onChange={handleChange}
         ></textarea>
         <button type="submit">submit</button>

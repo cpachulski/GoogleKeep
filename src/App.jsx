@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import Header from "./components/Header";
 import CreateArea from "./components/CreateAreaObject";
 import Note from "./components/Note";
@@ -8,7 +9,8 @@ import "./App.css";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [isModalHiden, setIsModalHiden] = useState(false);
+  const [filteredNotes, setFilteredNotes] = useState([]);
+  const [isModalHidden, setIsModalHidden] = useState(false);
   const [selectedNoteId, setSelectedNoteId] = useState("");
 
   function addNote(newNote) {
@@ -20,11 +22,11 @@ function App() {
   }
 
   function handleUpdateNote(id) {
-    setIsModalHiden((current) => !current);
+    setIsModalHidden((current) => !current);
     setSelectedNoteId(id);
   }
 
-  const noteList = notes.map((note) => (
+  const noteList = filteredNotes.map((note) => (
     <Note
       key={note.id}
       id={note.id}
@@ -32,22 +34,31 @@ function App() {
       content={note.content}
       onDelete={deleteNote}
       handleUpdateNote={handleUpdateNote}
-      isHidden={isModalHiden} //<--css fix
+      isHidden={isModalHidden} //<--css fix
     />
   ));
 
   const getData = (data) => {
-    //console.log("data", data.id);
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== data.id));
     setNotes((prevNotes) => [data, ...prevNotes]);
   };
 
+  useEffect(() => {
+    console.log("run");
+    setFilteredNotes(notes);
+  }, [notes]);
+
   return (
     <div className="App">
-      <Header />
+      <Header
+        notes={notes}
+        filteredNotes={filteredNotes}
+        setFilteredNotes={setFilteredNotes}
+      />
+
       <CreateArea onAdd={addNote} />
       <Modal
-        isHidden={isModalHiden}
+        isHidden={isModalHidden}
         notes={notes}
         selectedNoteId={selectedNoteId}
         onSubmit={getData}
@@ -57,8 +68,23 @@ function App() {
     </div>
   );
 }
-
 export default App;
+
+// useEffect(() => {
+//   let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
+//   // localStorage.getItem(mystate_deserialized);
+
+//   setNotes(mystate_deserialized);
+// }, []);
+
+// useEffect(() => {
+//  // let mystate_serialized = JSON.stringify(notes);
+//   localStorage.setItem("mystate", mystate_serialized);
+//   //let mystate_serialized = JSON.stringify(notes);
+//   localStorage.setItem("mystate", mystate_serialized);
+//   let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
+//   console.log(mystate_deserialized);
+// }, [notes]);
 
 // useEffect(() => {
 //   let mystate_deserialized = JSON.parse(localStorage.getItem("mystate"));
